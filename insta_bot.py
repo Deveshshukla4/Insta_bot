@@ -165,3 +165,40 @@ def delete_comment_by_word(user_id , post_id):
         print "No comments found for " + str(word)
         operations(user_id)
 
+
+# function to delete comments manually
+
+def delete_comment_manually(user_id,post_id):
+    requests_url = (BASE_URL + 'media/%s/comments?access_token=%s' % (post_id,APP_ACCESS_TOKEN))
+    fetch = requests.get(requests_url).json()
+    c = 1
+    for comments in fetch['data']:
+        if len(comments['text']):
+            print "comment id : " + str(c) + " " + "text : " + str(comments['text'])
+        else:
+            print "No comments to delete !"
+            operations(user_id)
+        c = c + 1
+    comment_y = raw_input("Enter the comment id you want to delete OR B to go Back  :")
+    if comment_y == "b" or comment_y == "B":
+        operations(user_id)
+    else:
+
+        comment_y = int(comment_y)
+
+    comment_id =["x"]
+    for x in fetch['data']:
+        comment_id.append(x['id'])
+    x = comment_id[comment_y]
+
+    requests_url2 = (BASE_URL + 'media/%s/comments/%s?access_token=%s' % (post_id, x , APP_ACCESS_TOKEN))
+    response = requests.delete(requests_url2).json()
+
+    if response['data'] == None:
+        print "comment deleted successfully."
+        delete_comment_manually(user_id, post_id)
+
+    else:
+        print "Something Went wrong! Can't Delete the comment."
+        delete_comment_manually(user_id,post_id)
+
