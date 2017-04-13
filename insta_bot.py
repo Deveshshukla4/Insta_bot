@@ -104,3 +104,17 @@ def like_post(uid, post_id):
         operations(uid)
 
 
+# function to delete the comment using two word method and manual method
+
+def select_the_way_to_delete_comment(user_id,post_id):
+    response = raw_input("Enter D to delete comment by word OR M to delete comments manually OR B to go back :").upper()
+    if response == "D" or response == "d":
+        delete_comment_by_word(user_id,post_id)
+    elif response == "M" or response == "m":
+        delete_comment_manually(user_id,post_id)
+    elif response == "B" or response == "b":
+        operations(user_id)
+    else:
+        print "Please Select the correct Method."
+        select_the_way_to_delete_comment(user_id,post_id)
+
