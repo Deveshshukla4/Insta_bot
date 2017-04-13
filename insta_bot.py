@@ -118,3 +118,20 @@ def select_the_way_to_delete_comment(user_id,post_id):
         print "Please Select the correct Method."
         select_the_way_to_delete_comment(user_id,post_id)
 
+
+#This Function is to comment on post
+
+def comment_post(uid , post_id):
+    comment = raw_input("Your Comment here : ")
+    payload = {'access_token': APP_ACCESS_TOKEN , 'text':comment}
+    requests_url = (BASE_URL + 'media/%s/comments' % (post_id))
+    response_to_comments = requests.post(requests_url, payload).json()
+
+    if len(response_to_comments):
+        print "Comment posted successfully."
+        operations(uid)
+
+    else:
+        print "Something went wrong! Cant post comment."
+        operations(uid)
+
