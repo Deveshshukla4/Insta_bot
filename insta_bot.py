@@ -87,3 +87,20 @@ def select_operation(user_id , post_id):
     elif opr == "A" or opr == "a":
         Average_number_of_words(user_id,post_id)
 
+#function to like the post
+
+
+def like_post(uid, post_id):
+    payload = {'access_token':APP_ACCESS_TOKEN}
+    requests_url = (BASE_URL + 'media/%s/likes' % (post_id))
+    response_to_like = requests.post(requests_url, payload).json() # post request to send data
+
+    if len(response_to_like):
+        print "Post liked successfully!"
+        operations(uid)
+
+    else:
+        print "Something went wrong! Can't like the post"
+        operations(uid)
+
+
