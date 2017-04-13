@@ -232,3 +232,7 @@ def Average_number_of_words(user_id , post_id):
         operations(user_id)
 
 
+
+
+get_user_by_username()
+
