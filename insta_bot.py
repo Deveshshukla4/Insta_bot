@@ -136,3 +136,32 @@ def comment_post(uid , post_id):
         operations(uid)
 
 
+
+#function to delete multiple comments containing a single word
+
+def delete_comment_by_word(user_id , post_id):
+    word = raw_input("Enter the word you want to search in comments :")
+    requests_url = (BASE_URL + 'media/%s/comments?access_token=%s' % (post_id, APP_ACCESS_TOKEN))
+    result = requests.get(requests_url).json()
+    result2 = result['data']
+    comment_list = []
+
+    #loop for storing comment id
+    for i in range(len(result2)):
+
+        split = result2[i]['text'].split()
+
+        if word in split:
+            comment_list.append(result2[i]['id'])
+
+
+    if len(comment_list):
+        for i in comment_list:
+            requests_url2 = (BASE_URL + 'media/%s/comments/%s?access_token=%s' % (post_id, i, APP_ACCESS_TOKEN))
+            response = requests.delete(requests_url2).json()
+        print str(len(comment_list)) + " Hurray! Comment deleted successfully."
+        operations(user_id)
+    else:
+        print "No comments found for " + str(word)
+        operations(user_id)
+
