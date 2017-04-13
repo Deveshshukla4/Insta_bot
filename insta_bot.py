@@ -69,3 +69,21 @@ def operations(user_id):
         post_id = post_list[x]
         select_operation(user_id, post_id)
 
+        
+
+#Function to perform various operations
+
+def select_operation(user_id , post_id):
+    opr = raw_input("Enter L to like a Post \n  OR C to comment on a Post \n  OR D to Delete comment \n  "
+                    "OR A to find average number of words per comment \n  OR B to go back : ").upper()
+    if opr == "L" or opr == "l":
+        like_post(user_id , post_id)
+    elif opr == "C" or opr == "c":
+        comment_post(user_id , post_id)
+    elif opr == "B" or opr == "b":
+        operations(user_id)
+    elif opr == "D" or opr == "d":
+        select_the_way_to_delete_comment(user_id,post_id)
+    elif opr == "A" or opr == "a":
+        Average_number_of_words(user_id,post_id)
+
