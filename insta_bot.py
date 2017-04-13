@@ -20,3 +20,27 @@ def self_info():
 
 #function to search the username and perform operations
 
+def get_user_by_username():
+    user_name = raw_input("Enter Username  you wants to Search  OR S to Check your profile  OR Q to quit : ")
+    requests_url = (BASE_URL + 'users/search?q=%s&access_token=%s') % (user_name , APP_ACCESS_TOKEN)
+    search_results = requests.get(requests_url).json()
+
+
+    if len(search_results['data']) :
+        print "User id : " + str(search_results['data'][0]['id'])
+        print "Full name : " + str(search_results['data'][0]['full_name'])
+        print "Bio : " + str(search_results['data'][0]['bio'])
+        response = raw_input("Enter Y to perform operations or N to continue search : ").upper()
+        if response == "Y":
+            operations(search_results['data'][0]['id'])
+        else:
+            get_user_by_username()
+    elif user_name == "s" or user_name == "S":
+        self_info()
+
+    elif user_name == "q" or user_name == "Q":
+        exit()
+    else:
+        print "User doesn't exists !"
+        get_user_by_username()
+
