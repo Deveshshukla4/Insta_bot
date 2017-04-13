@@ -202,3 +202,33 @@ def delete_comment_manually(user_id,post_id):
         print "Something Went wrong! Can't Delete the comment."
         delete_comment_manually(user_id,post_id)
 
+
+# function to find the average number of words per comment on a post
+
+def Average_number_of_words(user_id , post_id):
+    requests_url = (BASE_URL + 'media/%s/comments?access_token=%s' % (post_id, APP_ACCESS_TOKEN))
+    fetch = requests.get(requests_url).json()
+    c = 1
+    av = 0
+    if len(fetch['data']) > 0:
+
+        for comments in fetch['data']:
+            if len(comments['text']):
+                print "comment id : " + str(c) + " " + "text : " + str(comments['text'])
+                x1 = comments['text'].split()
+                k = 0
+                for i in x1:
+                    k = k +1
+                av = av + k
+
+            c = c + 1
+        total_words = av
+        total_comments = c - 1
+        Average = total_words / total_comments
+        print "Average number of words per comment is : " + str( Average)
+        operations(user_id)
+    else:
+        print "No comments found !"
+        operations(user_id)
+
+
